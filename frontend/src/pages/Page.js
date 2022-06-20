@@ -28,7 +28,7 @@ class Page extends Component {
     updatePage() {
         axios.get(process.env.REACT_APP_API_URL + "/page/" + this.props.params.url_alias)
             .then((response) => {
-                this.setState({ page: response.data.data });
+                this.setState({ page: response.data });
                 document.title = this.state.page.title;
                 this.setState({ error: false, errorMessage: "" });
             })
