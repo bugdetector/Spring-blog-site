@@ -14,7 +14,7 @@ class Navbar extends Component {
     componentDidMount() {
         axios.get(process.env.REACT_APP_API_URL + "/navbar")
             .then((response) => {
-                this.setState({ elements: response.data.data });
+                this.setState({ elements: response.data });
             })
             .catch(function (error) {
                 //console.log(error);
@@ -33,7 +33,7 @@ class Navbar extends Component {
                         <div className="collapse navbar-collapse" id="navbarCollapse">
                             <ul className="navbar-nav me-auto mb-2 mb-md-0">
                                 {this.state.elements.map((el) => {
-                                    if (el.subitems.length === 0) {
+                                    if (!el.subitems || el.subitems.length === 0) {
                                         return (<li className="nav-item" key={el.ID}>
                                             <Link to={el.url} className="nav-link">{el.title}</Link>
                                         </li>);
