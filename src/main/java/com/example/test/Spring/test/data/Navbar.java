@@ -1,6 +1,8 @@
 package com.example.test.Spring.test.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,8 +10,11 @@ import java.util.List;
 
 @Entity
 public class Navbar {
+    public enum AvailableFor {
+        logged_in, non_logged_in, both;
+    }
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
 
     private String title;
@@ -17,10 +22,14 @@ public class Navbar {
     private String link_class;
     private String url;
     @Column(name = "available_for")
-    private String availableFor;
+    @Enumerated(EnumType.STRING)
+    private AvailableFor availableFor;
     private Integer weight;
-    private Integer parent;
+    @OneToOne
+    private Navbar parent;
+    @CreatedDate
     private Date created_at;
+    @LastModifiedDate
     private Date last_updated;
 
     @OneToMany(mappedBy = "parent")
@@ -29,7 +38,7 @@ public class Navbar {
 
     @Autowired
     public  Navbar() {}
-    public Navbar(int ID, String title, String icon_class, String link_class, String url, String available_for, Integer weight, Integer parent, Date created_at, Date last_updated) {
+    public Navbar(int ID, String title, String icon_class, String link_class, String url, AvailableFor available_for, Integer weight, Navbar parent, Date created_at, Date last_updated) {
         this.ID = ID;
         this.title = title;
         this.icon_class = icon_class;
@@ -82,11 +91,11 @@ public class Navbar {
         this.url = url;
     }
 
-    public String getAvailableFor() {
+    public AvailableFor getAvailableFor() {
         return availableFor;
     }
 
-    public void setAvailableFor(String availableFor) {
+    public void setAvailableFor(AvailableFor availableFor) {
         this.availableFor = availableFor;
     }
 
@@ -98,11 +107,11 @@ public class Navbar {
         this.weight = weight;
     }
 
-    public Integer getParent() {
+    public Navbar getParent() {
         return parent;
     }
 
-    public void setParent(Integer parent) {
+    public void setParent(Navbar parent) {
         this.parent = parent;
     }
 

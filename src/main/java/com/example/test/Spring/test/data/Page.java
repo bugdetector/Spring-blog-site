@@ -1,5 +1,8 @@
 package com.example.test.Spring.test.data;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -7,19 +10,22 @@ import java.util.Date;
 @Table(name = "pages")
 public class Page {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
 
+    @Column(unique = true, nullable = false)
     private String title;
 
-    @Column(name = "url_alias")
+    @Column(name = "url_alias", unique = true, nullable = false)
     private String urlAlias;
 
     private String body;
 
+    @CreatedDate
     @Column(name = "created_at")
     private Date createdAt;
 
+    @LastModifiedDate
     @Column(name = "last_updated")
     private Date lastUpdated;
 

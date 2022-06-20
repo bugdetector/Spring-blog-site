@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface NavbarRepository extends JpaRepository<Navbar, Integer> {
-    List<Navbar> findByParentAndAvailableFor(Integer parent, String availableFor);
+    List<Navbar> findByParentAndAvailableFor(Integer parent, Navbar.AvailableFor availableFor);
 }

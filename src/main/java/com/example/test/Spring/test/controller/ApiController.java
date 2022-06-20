@@ -23,7 +23,7 @@ public class ApiController {
 
     @RequestMapping(path = "/navbar", method = RequestMethod.GET)
     public List<Navbar> getNavbarElements(){
-        return this.navbarRepository.findByParentAndAvailableFor(null, "both");
+        return this.navbarRepository.findByParentAndAvailableFor(null, Navbar.AvailableFor.both);
     }
     @RequestMapping(path = "/page/{urlAlias}", method = RequestMethod.GET)
     public Page getPage(@PathVariable String urlAlias){
